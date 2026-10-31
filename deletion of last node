@@ -1,0 +1,103 @@
+
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+int main()
+{
+    Node *head = NULL, *temp, *newNode;
+    int n, value;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    // Creating linked list
+    for (int i = 1; i <= n; i++)
+    {
+        newNode = (Node*)malloc(sizeof(Node));
+
+        cout << "Enter data for node " << i << ": ";
+        cin >> value;
+
+        newNode->data = value;
+        newNode->next = NULL;
+
+        if (head == NULL)
+        {
+            head = newNode;
+            temp = head;
+        }
+        else
+        {
+            temp->next = newNode;
+            temp = newNode;
+        }
+    }
+
+    // Display original linked list
+    cout << "\nOriginal Linked List: ";
+
+    temp = head;
+
+    while (temp != NULL)
+    {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+
+    // Deletion of last node
+    if (head == NULL)
+    {
+        cout << "\nLinked List is empty.";
+    }
+    else if (head->next == NULL)
+    {
+        free(head);
+        head = NULL;
+    }
+    else
+    {
+        temp = head;
+
+        while (temp->next->next != NULL)
+        {
+            temp = temp->next;
+        }
+
+        free(temp->next);
+        temp->next = NULL;
+    }
+
+    cout << "\nLast node deleted successfully.";
+
+    // Display updated linked list
+    cout << "\nUpdated Linked List: ";
+
+    temp = head;
+
+    while (temp != NULL)
+    {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+
+    cout << "NULL";
+
+    // Free remaining memory
+    temp = head;
+
+    while (temp != NULL)
+    {
+        Node* nextNode = temp->next;
+        free(temp);
+        temp = nextNode;
+    }
+
+    return 0;
+}
